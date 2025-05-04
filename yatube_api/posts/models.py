@@ -15,12 +15,15 @@ def get_truncated_span_from_text(text):
 
 
 class Group(models.Model):
-    """Group model for Data Base.
+    """
+    Модель Group для базы данных.
 
-    Columns:
-        title - Char[128];
-        slug - Slug, unique;
-        description - Text.
+    Представляет собой сообщество или группу постов.
+
+    Поля:
+        title — строковое поле (до 128 символов);
+        slug — поле типа Slug, уникальное;
+        description — текстовое поле.
     """
 
     title = models.CharField(verbose_name='Название', max_length=128)
@@ -40,14 +43,17 @@ class Group(models.Model):
 
 
 class Post(models.Model):
-    """Post model for Data Base.
+    """
+    Модель Post для базы данных.
 
-    Columns:
-        text - Text;
-        author - FK(User), delete cascade, related name = 'posts';
-        group - FK(Group), delete cascade, related name = 'posts', null, blank;
-        image - Image, folder = 'posts/', null, blank;
-        pub_date - DateTime, auto_now_add.
+    Представляет собой публикацию пользователя.
+
+    Поля:
+        text — текстовое поле для содержимого поста;
+        author — внешний ключ на модель User, каскадное удаление, related_name='posts';
+        group — внешний ключ на модель Group, каскадное удаление, related_name='posts', может быть пустым (null, blank);
+        image — поле для изображения, сохраняется в папку 'posts/', может быть пустым (null, blank);
+        pub_date — дата и время публикации, автоматически устанавливается при создании записи.
     """
 
     text = models.TextField(verbose_name='Текст')
@@ -81,13 +87,16 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    """Comment model for Data Base.
+    """
+    Модель Comment для базы данных.
 
-    Columns:
-        text - Text;
-        author - FK(User), delete cascade, related name = 'comments';
-        post - FK(Post), delete cascade, related name = 'comments';
-        created - DateTime, auto_now_add.
+    Представляет собой комментарий к посту.
+
+    Поля:
+        text — текстовое поле для содержимого комментария;
+        author — внешний ключ на модель User, каскадное удаление, related_name='comments';
+        post — внешний ключ на модель Post, каскадное удаление, related_name='comments';
+        created — дата и время создания комментария, автоматически устанавливается при создании записи.
     """
 
     text = models.TextField(verbose_name='Текст')
@@ -117,13 +126,15 @@ class Comment(models.Model):
 
 
 class Follow(models.Model):
-    """Follow model for Data Base.
+    """
+    Модель Follow для базы данных.
 
-    Provides a system of user subscriptions to each other.
-    The object is a couple of users (`user` is following `following`).
-    Columns:
-        follower - FK(User), delete cascade, related name = 'follower';
-        following - FK(User), delete cascade, related name = 'following'.
+    Обеспечивает систему подписок пользователей друг на друга.
+    Объект представляет собой пару пользователей: user подписывается на following.
+
+    Поля:
+        user — внешний ключ на модель User, каскадное удаление, related_name='follower' (кто подписан);
+        following — внешний ключ на модель User, каскадное удаление, related_name='following' (на кого подписаны).
     """
 
     user = models.ForeignKey(
