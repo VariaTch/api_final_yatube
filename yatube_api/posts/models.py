@@ -50,11 +50,11 @@ class Post(models.Model):
 
     Поля:
         text — текстовое поле для содержимого поста;
-        author — внешний ключ на модель User, каскадное удаление, 
+        author — внешний ключ на модель User, каскадное удаление,
         related_name='posts';
-        group — внешний ключ на модель Group, каскадное удаление, 
+        group — внешний ключ на модель Group, каскадное удаление,
         related_name='posts', может быть пустым (null, blank);
-        image — поле для изображения, сохраняется в папку 'posts/', 
+        image — поле для изображения, сохраняется в папку 'posts/',
         может быть пустым (null, blank);
         pub_date — дата и время публикации, автоматически устанавливается
         при создании записи.
@@ -62,7 +62,8 @@ class Post(models.Model):
 
     text = models.TextField(verbose_name="Текст")
     author = models.ForeignKey(
-        User, verbose_name="Автор", on_delete=models.CASCADE, related_name="posts"
+        User, verbose_name="Автор", on_delete=models.CASCADE,
+        related_name="posts"
     )
     group = models.ForeignKey(
         Group,
@@ -73,9 +74,11 @@ class Post(models.Model):
         blank=True,
     )
     image = models.ImageField(
-        verbose_name="Фотография", upload_to="posts/", null=True, blank=True
+        verbose_name="Фотография", upload_to="posts/", null=True,
+        blank=True
     )
-    pub_date = models.DateTimeField(verbose_name="Дата публикации", auto_now_add=True)
+    pub_date = models.DateTimeField(verbose_name="Дата публикации",
+                                    auto_now_add=True)
 
     class Meta:
         verbose_name = "Пост"
@@ -107,13 +110,16 @@ class Comment(models.Model):
 
     text = models.TextField(verbose_name="Текст")
     author = models.ForeignKey(
-        User, verbose_name="Автор", on_delete=models.CASCADE, related_name="comments"
+        User, verbose_name="Автор", on_delete=models.CASCADE,
+        related_name="comments"
     )
     post = models.ForeignKey(
-        Post, verbose_name="Пост", on_delete=models.CASCADE, related_name="comments"
+        Post, verbose_name="Пост", on_delete=models.CASCADE,
+        related_name="comments"
     )
     created = models.DateTimeField(
-        verbose_name="Дата добавления", auto_now_add=True, db_index=True
+        verbose_name="Дата добавления", auto_now_add=True,
+        db_index=True
     )
 
     class Meta:
@@ -160,5 +166,6 @@ class Follow(models.Model):
         verbose_name = "Подписка"
         verbose_name_plural = "Подписки"
         constraints = [
-            models.UniqueConstraint(fields=["user", "following"], name="unique_follow"),
+            models.UniqueConstraint(fields=["user", "following"],
+                                    name="unique_follow"),
         ]
