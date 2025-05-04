@@ -93,7 +93,8 @@ class FollowViewSet(
     """
     ViewSet для работы с подписками.
 
-    Позволяет создавать подписки на пользователей и просматривать список подписок.
+    Позволяет создавать подписки на пользователей и просматривать
+    список подписок.
     """
 
     serializer_class = FollowSerializer
@@ -112,6 +113,6 @@ class FollowViewSet(
         """
         Возвращает все подписки текущего пользователя.
         """
-        
+
         follows = Follow.objects.filter(user__exact=self.request.user)
         return follows

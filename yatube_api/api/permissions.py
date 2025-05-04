@@ -10,10 +10,12 @@ from rest_framework import permissions
 
 class IsObjectAuthorOrReadOnly(permissions.BasePermission):
     """
-    Разрешает доступ, если пользователь — автор объекта или запрос безопасный.
+    Разрешает доступ, если пользователь — автор объекта или
+    запрос безопасный.
 
     Безопасные методы (SAFE_METHODS) — это GET, HEAD, OPTIONS.
-    В остальных случаях редактировать или удалять объект может только его автор.
+    В остальных случаях редактировать или удалять объект может
+    только его автор.
     """
 
     def has_object_permission(self, request, view, obj):
