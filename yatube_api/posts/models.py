@@ -17,9 +17,7 @@ def get_truncated_span_from_text(text):
 class Group(models.Model):
     """
     Модель Group для базы данных.
-
     Представляет собой сообщество или группу постов.
-
     Поля:
         title — строковое поле (до 128 символов);
         slug — поле типа Slug, уникальное;
@@ -45,9 +43,7 @@ class Group(models.Model):
 class Post(models.Model):
     """
     Модель Post для базы данных.
-
     Представляет собой публикацию пользователя.
-
     Поля:
         text — текстовое поле для содержимого поста;
         author — внешний ключ на модель User, каскадное удаление,
@@ -62,7 +58,8 @@ class Post(models.Model):
 
     text = models.TextField(verbose_name="Текст")
     author = models.ForeignKey(
-        User, verbose_name="Автор", on_delete=models.CASCADE,
+        User, verbose_name="Автор",
+        on_delete=models.CASCADE,
         related_name="posts"
     )
     group = models.ForeignKey(
@@ -74,7 +71,9 @@ class Post(models.Model):
         blank=True,
     )
     image = models.ImageField(
-        verbose_name="Фотография", upload_to="posts/", null=True,
+        verbose_name="Фотография",
+        upload_to="posts/",
+        null=True,
         blank=True
     )
     pub_date = models.DateTimeField(verbose_name="Дата публикации",
@@ -95,9 +94,7 @@ class Post(models.Model):
 class Comment(models.Model):
     """
     Модель Comment для базы данных.
-
     Представляет собой комментарий к посту.
-
     Поля:
         text — текстовое поле для содержимого комментария;
         author — внешний ключ на модель User, каскадное удаление,
@@ -110,15 +107,18 @@ class Comment(models.Model):
 
     text = models.TextField(verbose_name="Текст")
     author = models.ForeignKey(
-        User, verbose_name="Автор", on_delete=models.CASCADE,
+        User, verbose_name="Автор",
+        on_delete=models.CASCADE,
         related_name="comments"
     )
     post = models.ForeignKey(
-        Post, verbose_name="Пост", on_delete=models.CASCADE,
+        Post, verbose_name="Пост",
+        on_delete=models.CASCADE,
         related_name="comments"
     )
     created = models.DateTimeField(
-        verbose_name="Дата добавления", auto_now_add=True,
+        verbose_name="Дата добавления",
+        auto_now_add=True,
         db_index=True
     )
 
@@ -137,11 +137,9 @@ class Comment(models.Model):
 class Follow(models.Model):
     """
     Модель Follow для базы данных.
-
     Обеспечивает систему подписок пользователей друг на друга.
     Объект представляет собой пару пользователей: user подписывается
     на following.
-
     Поля:
         user — внешний ключ на модель User, каскадное удаление,
         related_name='follower' (кто подписан);
