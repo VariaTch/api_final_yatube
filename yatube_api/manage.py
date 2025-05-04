@@ -5,7 +5,18 @@ import sys
 
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'yatube_api.settings')
+    """
+    Основная функция для выполнения административных команд Django.
+
+    Устанавливает переменную окружения DJANGO_SETTINGS_MODULE на 'yatube_api.settings',
+    затем передаёт аргументы командной строки утилите управления Django.
+
+    Примеры команд:
+    - python manage.py runserver
+    - python manage.py migrate
+    - python manage.py createsuperuser
+    """
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "yatube_api.settings")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -17,5 +28,5 @@ def main():
     execute_from_command_line(sys.argv)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
